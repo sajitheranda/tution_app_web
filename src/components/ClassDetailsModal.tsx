@@ -69,6 +69,17 @@ export default function ClassDetailsModal({ classItem, onClose, onEdit }: ClassD
             </div>
           </div>
 
+          {/* Image Banner */}
+          {classItem.image && (
+            <div className="mb-8 rounded-xl overflow-hidden h-64 md:h-80 w-full">
+              <img
+                src={classItem.image}
+                alt={classItem.subject}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left Column - Main Info */}
             <div className="lg:col-span-2 space-y-6">
@@ -105,11 +116,10 @@ export default function ClassDetailsModal({ classItem, onClose, onEdit }: ClassD
                           {time.startTime} - {time.endTime}
                         </div>
                       </div>
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        time.location === 'Online' 
-                          ? 'bg-purple-100 text-purple-800' 
-                          : 'bg-blue-100 text-blue-800'
-                      }`}>
+                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${time.location === 'Online'
+                        ? 'bg-purple-100 text-purple-800'
+                        : 'bg-blue-100 text-blue-800'
+                        }`}>
                         {time.location}
                       </span>
                     </div>
@@ -128,14 +138,19 @@ export default function ClassDetailsModal({ classItem, onClose, onEdit }: ClassD
                     <div className="text-3xl font-bold text-green-600">{classItem.price}</div>
                     <div className="text-sm text-gray-600">Per session</div>
                   </div>
-                  
+
+                  <div className="text-center pt-3 border-t border-blue-200">
+                    <div className="text-sm text-gray-600">Contact Number</div>
+                    <div className="text-xl font-bold text-gray-900">{classItem.phoneNumber}</div>
+                  </div>
+
                   {classItem.type === 'individual' && (
                     <div className="text-center pt-3">
                       <div className="text-sm text-gray-600">Available Slots</div>
                       <div className="text-2xl font-bold text-blue-600">{classItem.availableSlots}</div>
                     </div>
                   )}
-                  
+
                   {(classItem.type === 'group' || classItem.type === 'mass') && (
                     <div className="text-center pt-3">
                       <div className="text-sm text-gray-600">Enrollment</div>
@@ -177,18 +192,6 @@ export default function ClassDetailsModal({ classItem, onClose, onEdit }: ClassD
                 </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="space-y-3">
-                <button className="w-full px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-semibold">
-                  Enroll Now
-                </button>
-                <button className="w-full px-4 py-3 border border-blue-600 text-blue-600 rounded-lg hover:bg-blue-50 transition-colors">
-                  Contact Teacher
-                </button>
-                <button className="w-full px-4 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors">
-                  Save for Later
-                </button>
-              </div>
             </div>
           </div>
         </div>

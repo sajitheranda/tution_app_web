@@ -1,8 +1,8 @@
 import { ClassType, IndividualClass, GroupClass, MassClass } from '@/types/class';
 
 export const subjects = [
-  'Mathematics', 'Science', 'English', 'Sinhala', 'Tamil', 
-  'History', 'Geography', 'ICT', 'Physics', 'Chemistry', 
+  'Mathematics', 'Science', 'English', 'Sinhala', 'Tamil',
+  'History', 'Geography', 'ICT', 'Physics', 'Chemistry',
   'Biology', 'Accounting', 'Business Studies'
 ];
 
@@ -33,6 +33,8 @@ export const dummyClasses: ClassType[] = [
       { day: 'Wednesday', startTime: '16:00', endTime: '17:00', location: 'Colombo' }
     ],
     price: 'LKR 1500',
+    phoneNumber: '0771234567',
+    image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&auto=format&fit=crop&q=60',
     availableSlots: 3,
     createdAt: new Date('2024-01-15')
   },
@@ -50,6 +52,8 @@ export const dummyClasses: ClassType[] = [
       { day: 'Thursday', startTime: '15:00', endTime: '16:30', location: 'Kandy' }
     ],
     price: 'LKR 1000',
+    phoneNumber: '0719876543',
+    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&auto=format&fit=crop&q=60',
     maxStudents: 8,
     currentStudents: 5,
     createdAt: new Date('2024-01-10')
@@ -68,6 +72,8 @@ export const dummyClasses: ClassType[] = [
       { day: 'Sunday', startTime: '09:00', endTime: '12:00', location: 'Online' }
     ],
     price: 'LKR 800',
+    phoneNumber: '0701122334',
+    image: 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=800&auto=format&fit=crop&q=60',
     maxStudents: 50,
     currentStudents: 25,
     createdAt: new Date('2024-01-05')
@@ -86,6 +92,8 @@ export const dummyClasses: ClassType[] = [
       { day: 'Friday', startTime: '14:00', endTime: '15:00', location: 'Online' } // Mixed locations
     ],
     price: 'LKR 1200',
+    phoneNumber: '0775556666',
+    image: 'https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&auto=format&fit=crop&q=60',
     availableSlots: 2,
     createdAt: new Date('2024-01-20')
   }
@@ -99,7 +107,7 @@ export const searchClasses = (query: string, filters: {
   type?: string;
 }) => {
   return dummyClasses.filter(classItem => {
-    const matchesSearch = query === '' || 
+    const matchesSearch = query === '' ||
       classItem.subject.toLowerCase().includes(query.toLowerCase()) ||
       classItem.grade.toLowerCase().includes(query.toLowerCase()) ||
       classItem.teacherName.toLowerCase().includes(query.toLowerCase()) ||
@@ -107,7 +115,7 @@ export const searchClasses = (query: string, filters: {
 
     const matchesSubject = !filters.subject || classItem.subject === filters.subject;
     const matchesGrade = !filters.grade || classItem.grade === filters.grade;
-    const matchesLocation = !filters.location || classItem.location === filters.location;
+    const matchesLocation = !filters.location || classItem.times.some(time => time.location === filters.location);
     const matchesType = !filters.type || classItem.type === filters.type;
 
     return matchesSearch && matchesSubject && matchesGrade && matchesLocation && matchesType;

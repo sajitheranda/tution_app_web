@@ -44,11 +44,22 @@ export default function ClassCard({ classItem, onEdit, onViewDetails }: ClassCar
   };
 
   return (
-    <div 
+    <div
       onClick={handleCardClick}
       className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow cursor-pointer"
     >
       <div className="p-6">
+        {/* Image */}
+        {classItem.image && (
+          <div className="h-48 w-full mb-4 overflow-hidden rounded-lg">
+            <img
+              src={classItem.image}
+              alt={classItem.subject}
+              className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+        )}
+
         {/* Header */}
         <div className="flex justify-between items-start mb-3">
           <div>
@@ -79,9 +90,15 @@ export default function ClassCard({ classItem, onEdit, onViewDetails }: ClassCar
         </div>
 
         {/* Price */}
-        <div className="flex items-center text-sm text-gray-600 mb-4">
-          <span className="w-5">💰</span>
-          <span className="font-semibold text-green-600">{classItem.price}</span>
+        <div className="flex items-center justify-between text-sm text-gray-600 mb-4">
+          <div className="flex items-center">
+            <span className="w-5">💰</span>
+            <span className="font-semibold text-green-600">{classItem.price}</span>
+          </div>
+          <div className="flex items-center">
+            <span className="w-5">📞</span>
+            <span className="font-medium text-gray-900">{classItem.phoneNumber}</span>
+          </div>
         </div>
 
         {/* Schedule Preview */}
@@ -95,11 +112,10 @@ export default function ClassCard({ classItem, onEdit, onViewDetails }: ClassCar
                   <br />
                   <span>{time.startTime} - {time.endTime}</span>
                 </div>
-                <span className={`px-2 py-1 rounded-full text-xs ${
-                  time.location === 'Online' 
-                    ? 'bg-purple-100 text-purple-800' 
-                    : 'bg-gray-100 text-gray-800'
-                }`}>
+                <span className={`px-2 py-1 rounded-full text-xs ${time.location === 'Online'
+                  ? 'bg-purple-100 text-purple-800'
+                  : 'bg-gray-100 text-gray-800'
+                  }`}>
                   {time.location}
                 </span>
               </div>

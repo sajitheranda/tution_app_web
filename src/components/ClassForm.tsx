@@ -19,6 +19,8 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
     description: '',
     times: [{ day: 'Monday', startTime: '09:00', endTime: '10:00', location: '' }],
     price: '',
+    phoneNumber: '',
+    image: '',
     maxStudents: 10,
     availableSlots: 1,
   });
@@ -40,7 +42,7 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
   const updateTimeSlot = (index: number, field: keyof ClassTime, value: string) => {
     setFormData(prev => ({
       ...prev,
-      times: prev.times.map((time, i) => 
+      times: prev.times.map((time, i) =>
         i === index ? { ...time, [field]: value } : time
       )
     }));
@@ -69,11 +71,10 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
                     key={type}
                     type="button"
                     onClick={() => setFormData(prev => ({ ...prev, type }))}
-                    className={`p-4 border-2 rounded-lg text-center transition-colors ${
-                      formData.type === type
-                        ? 'border-blue-500 bg-blue-50 text-blue-700'
-                        : 'border-gray-300 text-gray-700 hover:border-gray-400'
-                    }`}
+                    className={`p-4 border-2 rounded-lg text-center transition-colors ${formData.type === type
+                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      : 'border-gray-300 text-gray-700 hover:border-gray-400'
+                      }`}
                   >
                     <div className="text-2xl mb-2">
                       {type === 'individual' && '👤'}
@@ -145,6 +146,46 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
               />
             </div>
 
+            {/* Phone Number */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+              <input
+                type="tel"
+                required
+                value={formData.phoneNumber}
+                onChange={(e) => setFormData(prev => ({ ...prev, phoneNumber: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="e.g., 0771234567"
+              />
+            </div>
+
+
+
+            {/* Image URL */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Class Image URL</label>
+              <input
+                type="url"
+                value={formData.image}
+                onChange={(e) => setFormData(prev => ({ ...prev, image: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                placeholder="https://example.com/image.jpg"
+              />
+              {formData.image && (
+                <div className="mt-2">
+                  <p className="text-sm text-gray-500 mb-1">Preview:</p>
+                  <img
+                    src={formData.image}
+                    alt="Class preview"
+                    className="w-full h-48 object-cover rounded-lg border border-gray-200"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://via.placeholder.com/800x400?text=Invalid+Image+URL';
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+
             {/* Class Specific Fields */}
 
             {(formData.type === 'group' || formData.type === 'mass') && (
@@ -173,7 +214,7 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
                   + Add Time Slot
                 </button>
               </div>
-              
+
               <div className="space-y-4">
                 {formData.times.map((time, index) => (
                   <div key={index} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
@@ -188,21 +229,21 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
                           <option key={day} value={day}>{day}</option>
                         ))}
                       </select>
-                      
+
                       <input
                         type="time"
                         value={time.startTime}
                         onChange={(e) => updateTimeSlot(index, 'startTime', e.target.value)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
-                      
+
                       <input
                         type="time"
                         value={time.endTime}
                         onChange={(e) => updateTimeSlot(index, 'endTime', e.target.value)}
                         className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
-                      
+
                       <select
                         value={time.location}
                         onChange={(e) => updateTimeSlot(index, 'location', e.target.value)}
@@ -214,7 +255,7 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
                         ))}
                       </select>
                     </div>
-                    
+
                     {formData.times.length > 1 && (
                       <div className="flex justify-end mt-2">
                         <button
@@ -250,7 +291,7 @@ export default function ClassForm({ onSubmit, onCancel, initialData }: ClassForm
             </div>
           </form>
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }

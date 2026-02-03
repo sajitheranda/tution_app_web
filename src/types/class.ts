@@ -16,6 +16,8 @@ export interface BaseClass {
   // Remove the main location field since it's now per time slot
   times: ClassTime[];
   price: string;
+  phoneNumber: string;
+  image?: string;
   createdAt: Date;
 }
 
@@ -47,6 +49,8 @@ export interface ClassFormData {
   // Remove location from here since it's now in ClassTime
   times: ClassTime[];
   price: string;
+  phoneNumber: string;
+  image?: string;
   maxStudents?: number;
   availableSlots?: number;
   // Remove isOnline
